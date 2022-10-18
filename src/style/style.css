@@ -1,0 +1,152 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.ribbon {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 800px;
+    background-color: rgb(233, 219, 219);
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 30px;
+    min-height: 100vh;
+}
+
+.post-content {
+    width: 100%;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.video {
+    width: 100%;
+}
+
+.record, .record_audio, .stop, .send {
+    display: block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+
+    background-size: 24px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgb(233, 219, 219);
+}
+
+.audio {
+    width: 100%;
+}
+
+.stop-audio, .stop-video {
+    display: none;
+    background-color: rgb(0, 196, 0);
+    background-image: url("../img/seo-social-web-network-internet_09_icon-icons.com_61507.png");
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    background-size: 24px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.stop-video {
+    background-image: url("../img/movie-symbol-of-video-camera_icon-icons.com_72981.png");
+}
+
+.record {
+    background-image: url("../img/movie-symbol-of-video-camera_icon-icons.com_72981.png");
+}
+
+.record_audio {
+
+    background-image: url("../img/seo-social-web-network-internet_09_icon-icons.com_61507.png");
+}
+
+.send {
+    background-image: url("../img/876777.png");
+}
+
+
+.post {
+    margin-top: auto;
+    display: flex;
+    width: 100%;
+    background-color: #fff;
+    padding: 8px;
+    gap: 8px;
+    border-radius: 10px;
+}
+
+.post-text {
+    width: 100%;
+    border: none;
+    resize: none;
+}
+
+.geolocation {
+    font-size: 10px;
+    display: block;
+}
+
+.modal {
+    display: none;
+    background-color: #fff;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 30px;
+    width: 400px;
+    position: fixed;
+    top: 15%;
+    left: calc(50% - 200px)
+}
+
+.add-coord {
+    width: 100%;
+    height: 32px;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin-top: 16px;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.group-btn {
+    display: flex;
+    justify-content: end;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.ok, .close {
+    
+    min-width: 50px;
+    cursor: pointer;
+    padding: 8px;
+    border: none;
+    background-color: rgb(233, 219, 219);
+    border-radius: 10px;
+}
+
+.modal_active {
+    display: block;
+}
+
+.err {
+    display: block;
+    margin-top: 8px;
+    color: red;
+    font-size: 12px;
+}
