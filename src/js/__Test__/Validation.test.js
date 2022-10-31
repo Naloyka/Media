@@ -16,6 +16,6 @@ test('invalid', () => {
     expect(coords(loc, loc2)).toEqual(false);
 });
 
-let c = '60.0538397, 30.4181857'
+// let c = '60.0538397, 30.4181857'
 
 
