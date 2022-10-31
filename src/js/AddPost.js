@@ -13,6 +13,8 @@ export default class AddPost {
         this.valueCoord()
         this.coords = this.coords.bind(this)
         this.saveStorage = this.saveStorage.bind(this)
+        this.x;
+        this.y;
     }
 
     geolocation() {
@@ -67,8 +69,8 @@ export default class AddPost {
             let coordtext = value.split(', ')
 
             if (this.coords(coordtext[1], coordtext[0])) {
-                this.longitude = coordtext[1];
-                this.latitude = coordtext[0];
+                this.x = coordtext[1];
+                this.y = coordtext[0];
                 modal.classList.remove("modal_active")
                 return `[${this.longitude}, ${this.latitude}]`
             } else {
@@ -84,7 +86,6 @@ export default class AddPost {
                 err.textContent = ""
             }, 3000)
         }
-
     }
 
     addPostText() {
@@ -93,6 +94,8 @@ export default class AddPost {
         const modal = document.querySelector('.modal')
         const send = document.querySelector('.send')
         let postText = document.querySelector(".post-text")
+        this.geolocation()
+
         send.addEventListener("click", (e) => {
 
             if (this.longitude && this.latitude) {
@@ -100,10 +103,16 @@ export default class AddPost {
                     <p>${postText.value}</p><span class="geolocation">[${this.latitude}, ${this.longitude}]</span></div>`)
                 postText.value = ''
                 this.saveStorage()
+            } else if (this.x && this.y) {
+                post.insertAdjacentHTML('beforebegin', `<div class="post-content">
+                <p>${postText.value}</p><span class="geolocation">[${this.x}, ${this.y}]</span></div>`)
+                postText.value = ''
+                this.saveStorage()
+                this.x = undefined
+                this.y = undefined
             } else {
                 modal.classList.add("modal_active")
             }
-
         })
     }
 
@@ -122,8 +131,14 @@ export default class AddPost {
             const chunks = []
             const recorder1 = new MediaRecorder(stream1)
             recorder1.addEventListener("start", () => {
-                recordAudio.style.display = "none"
+                if (this.latitude && this.x) {
+                    recordAudio.style.display = "none"
                 stop.style.display = 'block'
+                } else {
+                    this.geolocation()
+                    recordAudio.style.display = "none"
+                    stop.style.display = 'block'
+                }
             })
             recorder1.addEventListener('dataavailable', (e) => {
                 chunks.push(e.data)
@@ -131,9 +146,19 @@ export default class AddPost {
             let recordAudioActive = document.querySelector(".record_audio_active")
             recorder1.addEventListener("stop", () => {
                 const blobs = new Blob(chunks)
-                post.insertAdjacentHTML('beforebegin', ` <div class="post-content"><audio class="audio" src=${URL.createObjectURL(blobs)} 
+                if (this.latitude && this.longitude) {
+                    post.insertAdjacentHTML('beforebegin', ` <div class="post-content"><audio class="audio" src=${URL.createObjectURL(blobs)} 
                 controls></audio><span class="geolocation">[${this.latitude}, ${this.longitude}]</span></div>`)
-                this.saveStorage()
+                    this.saveStorage()
+                } 
+                 if (this.x && this.y) {
+                    post.insertAdjacentHTML('beforebegin', ` <div class="post-content"><audio class="audio" src=${URL.createObjectURL(blobs)} 
+                controls></audio><span class="geolocation">[${this.x}, ${this.y}]</span></div>`)
+                    this.saveStorage()
+                    this.x = undefined
+                    this.y = undefined
+                } 
+
 
                 // audioPlayer.src = URL.createObjectURL(blobs)
             })
@@ -162,17 +187,34 @@ export default class AddPost {
             const chunk = []
             const recorder = new MediaRecorder(stream)
             recorder.addEventListener("start", () => {
-                record.style.display = "none"
-                stop.style.display = 'block'
+                if (this.latitude && this.x) {
+                    record.style.display = "none"
+                    stop.style.display = 'block'
+                } else {
+                    this.geolocation()
+                    record.style.display = "none"
+                    stop.style.display = 'block'
+                }
+
             })
             recorder.addEventListener('dataavailable', (e) => {
                 chunk.push(e.data)
             })
             recorder.addEventListener("stop", () => {
                 const blob = new Blob(chunk)
-                post.insertAdjacentHTML('beforebegin', ` <div class="post-content"><video class="video" src=${URL.createObjectURL(blob)} 
+
+                if (this.latitude && this.longitude) {
+                    post.insertAdjacentHTML('beforebegin', ` <div class="post-content"><video class="video" src=${URL.createObjectURL(blob)} 
                 controls></video><span class="geolocation">[${this.latitude}, ${this.longitude}]</span></div>`)
-                this.saveStorage()
+                    this.saveStorage()
+                } 
+                if (this.x && this.y) {
+                    post.insertAdjacentHTML('beforebegin', ` <div class="post-content"><video class="video" src=${URL.createObjectURL(blob)} 
+                    controls></video><span class="geolocation">[${this.x}, ${this.y}]</span></div>`)
+                    this.saveStorage()
+                    this.x = undefined
+                    this.y = undefined
+                }
             })
             recorder.start()
             stop.addEventListener('click', () => {
